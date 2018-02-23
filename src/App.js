@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import router from './router';
 import { connect } from 'react-redux';
+import router from './router.js';
+import Header from './components/Header.js';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        
+        <Header />
+        {router}
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  if (!state) {
+    return {};
+  }
+  return state;
+}
+
+export default connect(mapStateToProps, {})(App);

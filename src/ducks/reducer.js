@@ -1,4 +1,9 @@
+import axios from 'axios';
+
 const initialState = {
+    username: '',
+    password: '',
+    homeListings: [],
     name: '',
     description: '',
     address: '',
@@ -12,6 +17,8 @@ const initialState = {
 };
 
 // TYPES
+const LOGIN = 'REGISTER';
+const REGISTER = 'LOGIN';
 const UPDATE_NAME = 'UPDATE_NAME';
 const UPDATE_DESCRIPTION = 'UPDATE_DESCRIPTION';
 const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
@@ -26,6 +33,11 @@ const UPDATE_DESIRED_RENT = 'UPDATE_DESIRED_RENT';
 // REDUCER
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case REGISTER + '_FULFILLED':
+            return Object.assign({}, state, { username: action.payload.username, password: action.payload.password });
+        case LOGIN + '_FULFILLED':
+            console.log(action.payload);
+            return Object.assign({}, state, { username: action.payload.username, password: action.payload.password });
         case UPDATE_NAME:
             return Object.assign({}, state, { name: action.payload });
         case UPDATE_DESCRIPTION:
@@ -52,6 +64,26 @@ function reducer(state = initialState, action) {
 }
 
 // ACTIONS
+export function register(user, history) {
+    return {
+        type: REGISTER,
+        payload: axios.post('/api/auth/register', user).then(res => {
+            history.push('/dashboard');
+            return res.data[0];
+        })
+    };
+}
+
+export function login(user, history) {
+    return {
+        type: LOGIN,
+        payload: axios.post('/api/auth/login', user).then(res => {
+            history.push('/dashboard');
+            return res.data[0];
+        })
+    };
+}
+
 export function updateName(name) {
     return {
         type: UPDATE_NAME,

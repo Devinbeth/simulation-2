@@ -36,7 +36,7 @@ function reducer(state = initialState, action) {
         case REGISTER + '_FULFILLED':
             return Object.assign({}, state, { username: action.payload.username, password: action.payload.password });
         case LOGIN + '_FULFILLED':
-            console.log(action.payload);
+            console.log('Action:', action.payload);
             return Object.assign({}, state, { username: action.payload.username, password: action.payload.password });
         case UPDATE_NAME:
             return Object.assign({}, state, { name: action.payload });

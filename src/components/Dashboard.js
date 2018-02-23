@@ -14,7 +14,7 @@ class Dashboard extends Component {
             <div>
                 <Header />
                 <h1>Dashboard</h1>
-                <h3>Welcome {this.props.username}</h3>
+                <h3>Welcome {this.props.username}!</h3>
                 <button><Link to='/wizard1'>Add New Property</Link></button>
             </div>
         );

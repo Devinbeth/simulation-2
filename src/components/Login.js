@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../ducks/reducer.js';
-import { register } from '../ducks/reducer.js';
+import { login, register } from '../ducks/reducer.js';
 import logo from '../assets/auth_logo.png';
 
 class Login extends Component {
@@ -17,14 +16,18 @@ class Login extends Component {
 
     login() {
         let user = {username: this.state.username, password: this.state.password};
-        this.props.login(user, this.props.history);
-        this.setState({username: '', password: ''});
+        this.props.login(user);
+        if (this.props.username) {
+            this.props.history.push('/dashboard');
+        }
     }
 
     register() {
         let user = {username: this.state.username, password: this.state.password};
-        this.props.register(user, this.props.history);
-        this.setState({username: '', password: ''});
+        this.props.register(user);
+        if (this.props.username) {
+            this.props.history.push('/dashboard');
+        }
     }
 
     render() {
@@ -46,7 +49,9 @@ function mapStateToProps(state) {
     if (!state) {
         return {};
     }
-    return state;
+    return {
+        username: state.username
+    };
 }
 
 export default connect(mapStateToProps, { login, register })(Login);

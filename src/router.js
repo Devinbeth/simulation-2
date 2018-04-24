@@ -13,11 +13,11 @@ export default (
         <div>
             <Route exact path='/' component={Login} />
             <Route path='/dashboard' component={Dashboard} />
-            <Route path='/wizard/1' component={Wizard1} />
-            <Route path='/wizard/2' component={Wizard2} />
-            <Route path='/wizard/3' component={Wizard3} />
-            <Route path='/wizard/4' component={Wizard4} />
-            <Route path='/wizard/5' component={Wizard5} />
+            <Route path='/wizard1' component={Wizard1} />
+            <Route path='/wizard2' component={Wizard2} />
+            <Route path='/wizard3' component={Wizard3} />
+            <Route path='/wizard4' component={Wizard4} />
+            <Route path='/wizard5' component={Wizard5} />
         </div>
     </HashRouter>
 )

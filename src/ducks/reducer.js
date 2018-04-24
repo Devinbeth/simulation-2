@@ -3,7 +3,7 @@ import axios from 'axios';
 const initialState = {
     username: '',
     password: '',
-    homeListings: [],
+    properties: [],
     name: '',
     description: '',
     address: '',
@@ -17,8 +17,10 @@ const initialState = {
 };
 
 // TYPES
-const LOGIN = 'REGISTER';
-const REGISTER = 'LOGIN';
+const LOGIN = 'LOGIN';
+const REGISTER = 'REGISTER';
+const GET_PROPERTIES = 'GET_PROPERTIES'
+const FILTER_PROPERTIES = 'FILTER_PROPERTIES';
 const UPDATE_NAME = 'UPDATE_NAME';
 const UPDATE_DESCRIPTION = 'UPDATE_DESCRIPTION';
 const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
@@ -36,8 +38,11 @@ function reducer(state = initialState, action) {
         case REGISTER + '_FULFILLED':
             return Object.assign({}, state, { username: action.payload.username, password: action.payload.password });
         case LOGIN + '_FULFILLED':
-            console.log('Action:', action.payload);
             return Object.assign({}, state, { username: action.payload.username, password: action.payload.password });
+        case GET_PROPERTIES + '_FULFILLED':
+            return Object.assign({}, state, { properties: action.payload });
+        case FILTER_PROPERTIES + '_FULFILLED':
+            return Object.assign({}, state, { properties: action.payload });
         case UPDATE_NAME:
             return Object.assign({}, state, { name: action.payload });
         case UPDATE_DESCRIPTION:
@@ -64,23 +69,35 @@ function reducer(state = initialState, action) {
 }
 
 // ACTIONS
-export function register(user, history) {
+export function register(user) {
+    let registered = axios.post('/api/auth/register', user).then(res => res.data[0]);
     return {
         type: REGISTER,
-        payload: axios.post('/api/auth/register', user).then(res => {
-            history.push('/dashboard');
-            return res.data[0];
-        })
+        payload: registered
     };
 }
 
-export function login(user, history) {
+export function login(user) {
+    let loggedIn = axios.post('/api/auth/login', user).then(res => res.data[0]);
     return {
         type: LOGIN,
-        payload: axios.post('/api/auth/login', user).then(res => {
-            history.push('/dashboard');
-            return res.data[0];
-        })
+        payload: loggedIn
+    };
+}
+
+export function getProperties() {
+    let properties = axios.get('/api/properties').then(res => res.data);
+    return {
+        type: GET_PROPERTIES,
+        payload: properties
+    };
+}
+
+export function filterProperties(rent) {
+    let properties = axios.get(`/api/properties?rent=${rent}`).then(res => res.data);
+    return {
+        type: FILTER_PROPERTIES,
+        payload: properties
     };
 }
 

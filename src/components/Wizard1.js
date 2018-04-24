@@ -6,7 +6,7 @@ class Wizard1 extends Component {
     render() {
         return (
             <div>
-                <button><Link to='/wizard2'>Next Step</Link></button>
+                <Link to='/wizard2'><button>Next Step</button></Link>
             </div>
         );
     }

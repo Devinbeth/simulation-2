@@ -29,6 +29,6 @@ app.post('/api/auth/login', auth_controller.login);
 app.post('/api/auth/logout', auth_controller.logout);
 
 // PROPERTIES ENDPOINTS
-app.post('/api/properties', prop_controller.create);
 app.get('/api/properties', prop_controller.read);
+app.post('/api/properties', prop_controller.create);
 app.delete('/api/properties/:id',prop_controller.delete);
